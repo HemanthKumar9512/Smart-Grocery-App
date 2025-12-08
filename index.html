@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | AI-Powered Grocery Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Auth Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <div class="auth-left">
+                <div class="brand-section">
+                    <div class="logo-large">
+                        <i class="fas fa-leaf"></i>
+                        <span>SmartCart</span>
+                    </div>
+                    <h1 class="auth-title">Smart Grocery Management</h1>
+                    <p class="auth-subtitle">AI-powered grocery tracking, recommendations, and delivery management</p>
+                    <div class="features-list">
+                        <div class="feature">
+                            <i class="fas fa-robot"></i>
+                            <span>AI-Powered Recommendations</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Smart Expiration Tracking</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Real-time Delivery Tracking</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-utensils"></i>
+                            <span>Personalized Meal Plans</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-right">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to your account</p>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form">
+                        <div class="input-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="password" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                        
+                        <div class="divider">
+                            <span>or continue with</span>
+                        </div>
+                        
+                        <button type="button" class="btn btn-outline btn-block">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        
+                        <p class="auth-switch">
+                            Don't have an account? 
+                            <a href="#" id="showRegister">Sign up now</a>
+                        </p>
+                    </form>
+                    
+                    <form id="registerForm" class="auth-form hidden">
+                        <div class="auth-header">
+                            <h2>Create Account</h2>
+                            <p>Start your smart grocery journey</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="regName">
+                                <i class="fas fa-user"></i> Full Name
+                            </label>
+                            <input type="text" id="regName" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="regEmail">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="regEmail" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="regPassword">
+                                <i class="fas fa-lock"></i> Create Password
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="regPassword" placeholder="Create a password" required>
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="regConfirm">
+                                <i class="fas fa-lock"></i> Confirm Password
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="regConfirm" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                        
+                        <p class="auth-switch">
+                            Already have an account? 
+                            <a href="#" id="showLogin">Sign in</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <div class="logo">
+                        <i class="fas fa-leaf"></i>
+                        <span>SmartCart</span>
+                    </div>
+                    
+                    <div class="nav-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search groceries, recipes, or ask AI...">
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <div class="nav-tabs">
+                        <a href="#" class="nav-tab active" data-page="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#" class="nav-tab" data-page="groceries">
+                            <i class="fas fa-store"></i>
+                            <span>Groceries</span>
+                        </a>
+                        <a href="#" class="nav-tab" data-page="assistant">
+                            <i class="fas fa-robot"></i>
+                            <span>AI Assistant</span>
+                        </a>
+                        <a href="#" class="nav-tab" data-page="delivery">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Delivery</span>
+                        </a>
+                        <a href="#" class="nav-tab" data-page="recipes">
+                            <i class="fas fa-utensils"></i>
+                            <span>Recipes</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartBadge">0</span>
+                    </button>
+                    
+                    <button class="nav-icon" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">John Doe</span>
+                            <span class="user-email" id="userEmail">john@example.com</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                        
+                        <div class="dropdown-menu">
+                            <a href="#" data-page="profile">
+                                <i class="fas fa-user-circle"></i> Profile
+                            </a>
+                            <a href="#" data-page="settings">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <div class="divider"></div>
+                            <a href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="#" class="mobile-tab active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="mobile-tab" data-page="groceries">
+                <i class="fas fa-store"></i>
+                <span>Shop</span>
+            </a>
+            <a href="#" class="mobile-tab" data-page="assistant">
+                <i class="fas fa-robot"></i>
+                <span>AI</span>
+            </a>
+            <a href="#" class="mobile-tab" data-page="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart</span>
+            </a>
+            <a href="#" class="mobile-tab" data-page="profile">
+                <i class="fas fa-user"></i>
+                <span>Me</span>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard -->
+            <section class="page active" id="dashboardPage">
+                <div class="page-header">
+                    <div class="welcome-section">
+                        <h1 class="greeting">Good morning, <span id="greetingName">John</span>! 👋</h1>
+                        <p class="page-subtitle">Here's your grocery overview for today</p>
+                    </div>
+                    <div class="date-section">
+                        <i class="fas fa-calendar"></i>
+                        <span id="currentDate">Monday, December 9, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="stats-overview">
+                    <div class="stat-card gradient-blue">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Active Items</h3>
+                            <p class="stat-value">24</p>
+                            <p class="stat-change">+2 this week</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-orange">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Expiring Soon</h3>
+                            <p class="stat-value">3</p>
+                            <p class="stat-change">Use within 2 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-green">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>AI Suggestions</h3>
+                            <p class="stat-value">12</p>
+                            <p class="stat-change">Based on your habits</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-purple">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Monthly Budget</h3>
+                            <p class="stat-value">$156/$200</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid">
+                    <!-- Left Column -->
+                    <div class="column-left">
+                        <!-- Quick Actions -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Quick Actions</h2>
+                                <button class="btn-icon">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <div class="quick-actions">
+                                <button class="action-btn" data-page="groceries">
+                                    <div class="action-icon gradient-blue">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </div>
+                                    <span>Add Items</span>
+                                </button>
+                                <button class="action-btn" data-page="assistant">
+                                    <div class="action-icon gradient-green">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <span>Ask AI</span>
+                                </button>
+                                <button class="action-btn" data-page="recipes">
+                                    <div class="action-icon gradient-orange">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <span>Meal Plan</span>
+                                </button>
+                                <button class="action-btn" data-page="delivery">
+                                    <div class="action-icon gradient-purple">
+                                        <i class="fas fa-shipping-fast"></i>
+                                    </div>
+                                    <span>Track Order</span>
+                                </button>
+                                <button class="action-btn">
+                                    <div class="action-icon gradient-red">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <span>Alerts</span>
+                                </button>
+                                <button class="action-btn">
+                                    <div class="action-icon gradient-teal">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <span>Analytics</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Expiring Items -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Expiring Soon ⏰</h2>
+                                <span class="badge warning">3 items</span>
+                            </div>
+                            <div class="expiring-list">
+                                <div class="expiring-item">
+                                    <div class="expiring-icon">
+                                        <i class="fas fa-wine-bottle"></i>
+                                    </div>
+                                    <div class="expiring-details">
+                                        <h4>Fresh Milk</h4>
+                                        <p>Expires in 2 days</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Use Now</button>
+                                </div>
+                                <div class="expiring-item">
+                                    <div class="expiring-icon">
+                                        <i class="fas fa-egg"></i>
+                                    </div>
+                                    <div class="expiring-details">
+                                        <h4>Eggs</h4>
+                                        <p>Expires in 3 days</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Use Now</button>
+                                </div>
+                                <div class="expiring-item">
+                                    <div class="expiring-icon">
+                                        <i class="fas fa-bread-slice"></i>
+                                    </div>
+                                    <div class="expiring-details">
+                                        <h4>Whole Wheat Bread</h4>
+                                        <p>Expires tomorrow</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger">Use Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Column -->
+                    <div class="column-center">
+                        <!-- AI Recommendations -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>
+                                    <i class="fas fa-robot"></i> AI Recommendations
+                                    <span class="tag premium">SMART</span>
+                                </h2>
+                                <button class="btn-text">View All</button>
+                            </div>
+                            <div class="recommendations-grid">
+                                <div class="recommendation-card">
+                                    <div class="recommendation-badge">
+                                        <span>Best Match</span>
+                                    </div>
+                                    <div class="recommendation-content">
+                                        <h3>Avocado Toast Kit</h3>
+                                        <p>Perfect for your expiring bread and avocados</p>
+                                        <div class="tags">
+                                            <span class="tag">Breakfast</span>
+                                            <span class="tag">Healthy</span>
+                                            <span class="tag">Quick</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm">Add to Cart</button>
+                                </div>
+                                
+                                <div class="recommendation-card">
+                                    <div class="recommendation-badge discount">
+                                        <span>15% OFF</span>
+                                    </div>
+                                    <div class="recommendation-content">
+                                        <h3>Organic Chicken</h3>
+                                        <p>Matches your protein needs for the week</p>
+                                        <div class="tags">
+                                            <span class="tag">High Protein</span>
+                                            <span class="tag">Organic</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm">Add to Cart</button>
+                                </div>
+                                
+                                <div class="recommendation-card">
+                                    <div class="recommendation-badge">
+                                        <span>New</span>
+                                    </div>
+                                    <div class="recommendation-content">
+                                        <h3>Quinoa & Veggies</h3>
+                                        <p>Complete meal kit for healthy dinners</p>
+                                        <div class="tags">
+                                            <span class="tag">Vegetarian</span>
+                                            <span class="tag">Meal Kit</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Recent Activity</h2>
+                                <button class="btn-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon success">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>Order #12345 delivered successfully</p>
+                                        <span class="activity-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>Milk will expire in 2 days</p>
+                                        <span class="activity-time">Yesterday</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon info">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>AI generated weekly meal plan</p>
+                                        <span class="activity-time">Dec 8, 2024</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon primary">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>Added 3 items to your cart</p>
+                                        <span class="activity-time">Dec 7, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="column-right">
+                        <!-- Shopping List -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Shopping List</h2>
+                                <button class="btn-icon" id="addListItem">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="shopping-list">
+                                <div class="list-item">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span>Organic Milk</span>
+                                    </label>
+                                    <span class="item-quantity">2 units</span>
+                                </div>
+                                <div class="list-item">
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checked">Fresh Eggs</span>
+                                    </label>
+                                    <span class="item-quantity">1 dozen</span>
+                                </div>
+                                <div class="list-item">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span>Whole Wheat Bread</span>
+                                    </label>
+                                    <span class="item-quantity">1 loaf</span>
+                                </div>
+                                <div class="list-item">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span>Organic Avocados</span>
+                                    </label>
+                                    <span class="item-quantity">4 pieces</span>
+                                </div>
+                                <div class="list-item">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span>Chicken Breast</span>
+                                    </label>
+                                    <span class="item-quantity">500g</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-outline btn-block">View Full List</button>
+                            </div>
+                        </div>
+
+                        <!-- Weekly Meal Plan -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Weekly Meal Plan</h2>
+                                <span class="tag">AI Generated</span>
+                            </div>
+                            <div class="meal-plan">
+                                <div class="meal-day">
+                                    <span class="day-label">Mon</span>
+                                    <div class="meal-item">
+                                        <span class="meal-time">Dinner</span>
+                                        <p>Chicken Stir Fry</p>
+                                    </div>
+                                </div>
+                                <div class="meal-day">
+                                    <span class="day-label">Tue</span>
+                                    <div class="meal-item">
+                                        <span class="meal-time">Dinner</span>
+                                        <p>Pasta Primavera</p>
+                                    </div>
+                                </div>
+                                <div class="meal-day">
+                                    <span class="day-label">Wed</span>
+                                    <div class="meal-item">
+                                        <span class="meal-time">Dinner</span>
+                                        <p>Quinoa Bowl</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary btn-block">View Full Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Groceries Page -->
+            <section class="page" id="groceriesPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Grocery Store</h1>
+                        <p>Browse our AI-curated selection</p>
+                    </div>
+                    <div class="page-actions">
+                        <div class="filter-group">
+                            <button class="btn btn-outline" id="filterBtn">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                            <button class="btn btn-outline" id="sortBtn">
+                                <i class="fas fa-sort"></i> Sort
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="categories">
+                    <div class="category active" data-category="all">
+                        <i class="fas fa-star"></i>
+                        <span>All Items</span>
+                    </div>
+                    <div class="category" data-category="fruits">
+                        <i class="fas fa-apple-alt"></i>
+                        <span>Fruits</span>
+                    </div>
+                    <div class="category" data-category="vegetables">
+                        <i class="fas fa-carrot"></i>
+                        <span>Vegetables</span>
+                    </div>
+                    <div class="category" data-category="dairy">
+                        <i class="fas fa-cheese"></i>
+                        <span>Dairy</span>
+                    </div>
+                    <div class="category" data-category="meat">
+                        <i class="fas fa-drumstick-bite"></i>
+                        <span>Meat</span>
+                    </div>
+                    <div class="category" data-category="bakery">
+                        <i class="fas fa-bread-slice"></i>
+                        <span>Bakery</span>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+
+            <!-- AI Assistant Page -->
+            <section class="page" id="assistantPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>
+                            <i class="fas fa-robot"></i> Grocery AI Assistant
+                        </h1>
+                        <p>Your intelligent grocery companion</p>
+                    </div>
+                    <div class="assistant-status">
+                        <div class="status-indicator online"></div>
+                        <span>Online & Ready</span>
+                    </div>
+                </div>
+
+                <div class="assistant-container">
+                    <div class="assistant-sidebar">
+                        <div class="assistant-info">
+                            <div class="assistant-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3>SmartCart AI</h3>
+                            <p>Specialized in grocery management</p>
+                        </div>
+                        
+                        <div class="quick-actions-sidebar">
+                            <h4>Quick Actions</h4>
+                            <button class="quick-action" data-action="recipe">
+                                <i class="fas fa-utensils"></i>
+                                <span>Get Recipes</span>
+                            </button>
+                            <button class="quick-action" data-action="expiration">
+                                <i class="fas fa-clock"></i>
+                                <span>Check Expiry</span>
+                            </button>
+                            <button class="quick-action" data-action="recommend">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Get Recommendations</span>
+                            </button>
+                            <button class="quick-action" data-action="mealplan">
+                                <i class="fas fa-calendar"></i>
+                                <span>Meal Planning</span>
+                            </button>
+                        </div>
+                        
+                        <div class="conversation-history">
+                            <h4>Recent Conversations</h4>
+                            <div class="history-item">
+                                <i class="fas fa-utensils"></i>
+                                <span>Recipe suggestions</span>
+                            </div>
+                            <div class="history-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Shopping list help</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="assistant-chat">
+                        <div class="chat-header">
+                            <div class="chat-title">
+                                <h3>Conversation with AI</h3>
+                                <p>Ask anything about groceries</p>
+                            </div>
+                            <button class="btn-icon" id="clearChat">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message ai">
+                                <div class="message-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="message-content">
+                                    <p>Hello! I'm your AI grocery assistant. I can help you with:</p>
+                                    <ul class="message-list">
+                                        <li>Recipe suggestions based on your items</li>
+                                        <li>Expiration date tracking and alerts</li>
+                                        <li>Smart grocery recommendations</li>
+                                        <li>Meal planning and prep</li>
+                                        <li>Budget optimization</li>
+                                    </ul>
+                                    <p>How can I assist you today?</p>
+                                    <span class="message-time">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="suggested-questions">
+                            <button class="suggested-question" data-question="What can I make with my current items?">
+                                What can I make with my current items?
+                            </button>
+                            <button class="suggested-question" data-question="Any items expiring soon?">
+                                Any items expiring soon?
+                            </button>
+                            <button class="suggested-question" data-question="Give me healthy dinner ideas">
+                                Give me healthy dinner ideas
+                            </button>
+                            <button class="suggested-question" data-question="Help me plan meals for this week">
+                                Help me plan meals for this week
+                            </button>
+                        </div>
+
+                        <div class="chat-input">
+                            <div class="input-container">
+                                <input type="text" id="chatInput" placeholder="Ask your AI assistant...">
+                                <div class="input-actions">
+                                    <button class="btn-icon">
+                                        <i class="fas fa-image"></i>
+                                    </button>
+                                    <button class="btn-icon" id="sendMessage">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="input-hint">
+                                <i class="fas fa-lightbulb"></i> Try asking about recipes, expiring items, or recommendations
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Delivery Tracking Page -->
+            <section class="page" id="deliveryPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>
+                            <i class="fas fa-shipping-fast"></i> Delivery Tracking
+                        </h1>
+                        <p>Real-time tracking and order management</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="newOrderBtn">
+                            <i class="fas fa-plus"></i> New Order
+                        </button>
+                    </div>
+                </div>
+
+                <div class="delivery-content">
+                    <!-- Tracking Section -->
+                    <div class="tracking-section">
+                        <div class="tracking-card">
+                            <div class="tracking-header">
+                                <h3>Track Your Order</h3>
+                                <div class="tracking-input">
+                                    <input type="text" placeholder="Enter tracking number">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Track
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="tracking-progress">
+                                <div class="progress-steps">
+                                    <div class="step active">
+                                        <div class="step-number">1</div>
+                                        <div class="step-info">
+                                            <span class="step-title">Order Placed</span>
+                                            <span class="step-time">Dec 8, 10:30 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="step active">
+                                        <div class="step-number">2</div>
+                                        <div class="step-info">
+                                            <span class="step-title">Processing</span>
+                                            <span class="step-time">Dec 8, 11:45 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="step active">
+                                        <div class="step-number">3</div>
+                                        <div class="step-info">
+                                            <span class="step-title">Shipped</span>
+                                            <span class="step-time">Dec 9, 9:15 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-info">
+                                            <span class="step-title">Out for Delivery</span>
+                                            <span class="step-time">Estimated 3:00 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-info">
+                                            <span class="step-title">Delivered</span>
+                                            <span class="step-time">Estimated 4:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="delivery-info">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="info-label">Delivery ID</span>
+                                        <span class="info-value">ORD-12345</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Estimated Delivery</span>
+                                        <span class="info-value">Today, 4:00 PM</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Delivery Person</span>
+                                        <span class="info-value">John Smith</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Current Location</span>
+                                        <span class="info-value">2.5 miles away</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Orders -->
+                    <div class="orders-section">
+                        <div class="section-header">
+                            <h2>Active Orders</h2>
+                            <button class="btn-text">View All</button>
+                        </div>
+                        
+                        <div class="orders-grid" id="activeOrders">
+                            <!-- Orders will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Delivery History -->
+                    <div class="history-section">
+                        <div class="section-header">
+                            <h2>Delivery History</h2>
+                            <button class="btn-text">View All</button>
+                        </div>
+                        
+                        <div class="history-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Items</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="deliveryHistory">
+                                    <!-- History will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recipes Page -->
+            <section class="page" id="recipesPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>
+                            <i class="fas fa-utensils"></i> AI Recipe Suggestions
+                        </h1>
+                        <p>Personalized recipes based on your ingredients</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Create Recipe
+                        </button>
+                    </div>
+                </div>
+
+                <div class="recipes-content">
+                    <!-- Featured Recipes -->
+                    <div class="featured-recipes">
+                        <h2>Featured Recipes</h2>
+                        <div class="recipes-grid" id="featuredRecipes">
+                            <!-- Recipes will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Meal Planning -->
+                    <div class="meal-plan-section">
+                        <div class="section-header">
+                            <h2>Weekly Meal Plan</h2>
+                            <div class="plan-actions">
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-redo"></i> Regenerate
+                                </button>
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Plan
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="meal-plan-calendar" id="mealPlanCalendar">
+                            <!-- Meal plan will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shopping Cart -->
+            <div class="cart-sidebar" id="cartSidebar">
+                <div class="cart-header">
+                    <h3>Your Cart</h3>
+                    <button class="btn-icon close-cart">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotal">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Delivery</span>
+                        <span>$2.99</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax</span>
+                        <span id="cartTax">$0.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="cart-actions">
+                    <button class="btn btn-primary btn-block" id="checkoutBtn">
+                        <i class="fas fa-shopping-bag"></i> Proceed to Checkout
+                    </button>
+                    <button class="btn btn-outline btn-block" id="continueShopping">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Notifications Panel -->
+        <div class="notifications-panel" id="notificationsPanel">
+            <div class="panel-header">
+                <h3>Notifications</h3>
+                <button class="btn-text">Mark all as read</button>
+            </div>
+            <div class="notifications-list">
+                <!-- Notifications will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
